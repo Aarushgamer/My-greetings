@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Good Afternoon Greeting</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; padding: 24px;
+      display: grid; place-items: center;
+      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+      background: linear-gradient(135deg, #e9efff, #fdf0f7);
+      color: #20233a;
+    }
+    .card {
+      width: min(100%, 410px); padding: 28px;
+      background: #fff; border-radius: 22px;
+      box-shadow: 0 16px 45px #27315c20;
+    }
+    .emoji { font-size: 42px; }
+    h1 { margin: 8px 0; font-size: 27px; }
+    p { line-height: 1.5; color: #656980; }
+    label { display: block; margin: 18px 0 7px; font-weight: 650; }
+    input, select, button {
+      width: 100%; min-height: 48px; padding: 12px 14px;
+      border-radius: 12px; font: inherit;
+    }
+    input, select { border: 1px solid #d9dced; background: #fff; color: #20233a; }
+    button {
+      margin-top: 20px; border: 0; background: #5968e8;
+      color: white; font-weight: 700; cursor: pointer;
+    }
+    button:hover { background: #4654d1; }
+    #result {
+      display: none; margin-top: 20px; padding: 16px;
+      background: #f0f3ff; border-radius: 14px; color: #252b63;
+      font-weight: 650; overflow-wrap: anywhere;
+    }
+    .small { font-size: 12px; color: #85899e; text-align: center; margin-top: 18px; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="emoji" aria-hidden="true">☀️</div>
+    <h1>A little greeting for you</h1>
+    <p>Tell me your name and how you're feeling today.</p>
+
+    <form id="greetingForm">
+      <label for="name">Your name</label>
+      <input id="name" name="name" type="text" placeholder="Enter your name" maxlength="60" required>
+
+      <label for="mood">How are you feeling?</label>
+      <select id="mood" name="mood" required>
+        <option value="">Choose your mood</option>
+        <option value="good">Good</option>
+        <option value="bad">Bad</option>
+        <option value="happy">Happy</option>
+        <option value="sad">Sad</option>
+        <option value="okay">Just okay</option>
+      </select>
+
+      <button type="submit">Get my greeting</button>
+    </form>
+
+    <div id="result" role="status" aria-live="polite"></div>
+    <p class="small">Made with a little Python-inspired logic ✨</p>
+  </main>
+
+  <script>
+    const form = document.getElementById("greetingForm");
+    const result = document.getElementById("result");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const mood = document.getElementById("mood").value.toLowerCase();
+
+      const responses = {
+        good: "Great! Have an amazing day.",
+        bad: "I hope your day gets better.",
+        happy: "Keep smiling and enjoy the good moments!",
+        sad: "Take things one step at a time. I hope things feel easier soon.",
+        okay: "That's okay too. Take your day at your own pace."
+      };
+
+      if (!name || !mood) {
+        result.textContent = "Please enter your name and choose your mood.";
+      } else {
+        result.textContent = `Good afternoon, ${name}! ${responses[mood] || `Thanks for sharing. I hope you feel more ${mood}.`}`;
+      }
+      result.style.display = "block";
+    });
+  </script>
+</body>
+</html>
